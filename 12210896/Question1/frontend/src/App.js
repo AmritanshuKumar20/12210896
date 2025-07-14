@@ -1,20 +1,19 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ShortenerPage from './pages/ShortenerPage';
+import StatisticsPage from './pages/StatisticsPage';
+import RedirectHandler from './components/RedirectHandler';
 
 function App() {
-  const [msg, setMsg] = useState('');
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/test')
-      .then(res => setMsg(res.data.message))
-      .catch(err => console.error(err));
-  }, []);
-
   return (
-    <div>
-      <h1>{msg}</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<ShortenerPage />} />
+        <Route path="/statistics" element={<StatisticsPage />} />
+        <Route path=":shortcode" element={<RedirectHandler />} />
+      </Routes>
+    </Router>
   );
-}
+} 
 
 export default App;
